@@ -11,10 +11,7 @@
 #'
 #' @source [The wikipedia article on the Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem)
 #'
-#' @importFrom magrittr %>%
-#' @importFrom dplyr arrange filter
-#'
-#' @export knapsack_dynamic
+#' @export greedy_knapsack
 
 
 greedy_knapsack <- function(x, W){

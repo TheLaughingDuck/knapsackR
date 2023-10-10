@@ -11,13 +11,10 @@
 #'
 #' @source [The wikipedia article on the Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem)
 #'
-#' @importFrom magrittr %>%
-#' @importFrom dplyr arrange filter
-#'
-#' @export brute_force_knapsack
+#' @export knapsack_brute_force
 
 
-brute_force_knapsack <- function(x, W){
+knapsack_brute_force <- function(x, W){
 
   # ---V--- CHECK INPUT ---V---
   # Check arg1 argument

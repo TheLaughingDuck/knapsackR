@@ -4,16 +4,16 @@
 \alias{knapsack_dynamic}
 \title{The \code{knapsack_dynamic} function}
 \source{
-\href{https://en.wikipedia.org/wiki/Knapsack_problem}{The wikipedia article on the Knapsack problem}
+\href{https://en.wikipedia.org/wiki/Knapsack_problem#0-1_knapsack_problem}{Dynamic programming algorithm from the wikipedia article on the Knapsack problem}
 }
 \usage{
 knapsack_dynamic(x, W)
 }
 \arguments{
 \item{x}{A dataframe containing the objects that can go in the knapsack.
-It has two variables \code{v} indicating the value of the object, and \code{w} indicating the weight of the object.}
+It has two variables \code{v} indicating the value of the object, and \code{w} indicating the weight of the object. For the dynamic solution, the weights must be positive integers.}
 
-\item{W}{A numeric indicating the size of the knapsack. In other words: the maximum weight that the knapsack can support.}
+\item{W}{A numeric (must be positive integer) indicating the size of the knapsack. In other words: the maximum weight that the knapsack can support.}
 }
 \value{
 A list of $value: the maximum knapsack value (numeric), and $elements: The rows in \code{x} that achieve this value, in the form of a vector.
