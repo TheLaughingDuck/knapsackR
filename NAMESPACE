@@ -3,3 +3,8 @@
 export(greedy_knapsack)
 export(knapsack_brute_force)
 export(knapsack_dynamic)
+importFrom(dplyr,arrange)
+importFrom(dplyr,desc)
+importFrom(dplyr,mutate)
+importFrom(magrittr,"%>%")
+importFrom(rlang,.data)
