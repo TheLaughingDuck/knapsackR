@@ -11,12 +11,12 @@
 #'
 #' @source [Dynamic programming algorithm from the wikipedia article on the Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem#0-1_knapsack_problem)
 #'
+#' @importFrom r2r hashmap
+#'
 #' @export knapsack_dynamic
 
 
 knapsack_dynamic <- function(x, W){
-  # Log start time for output
-  start_time <- Sys.time()
 
   # ---V--- CHECK INPUT ---V---
   # Check x argument
@@ -28,38 +28,60 @@ knapsack_dynamic <- function(x, W){
   stopifnot("maximum weight is not a positive integer (as required)" = all(W %% 1 == 0 & W > 0))
   # ---^--- CHECK INPUT ---^---
 
-
-  # Create matrix
-  m <- matrix(rep(NA, ((nrow(x)+1)*(W+1))), nrow=nrow(x)+1, dimnames = list(0:nrow(x), 0:W))
-  m[1,] <- rep(0, W+1)
-
-  # Loop
-  # these i and w, they represent the number of objects, and the current weight, respectively
-  # Thus some adjustments for index purposes must be made.
-  i <- 1 # number of objects. *not* position in m.
-  w <- 0 # current weight limit
-  while(i <= nrow(x)){
-    while(w <= W){
-      if (x$w[i] > w){
-        m[i+1, w+1] <- m[i, w+1]
-      }
-      else {
-        m[i+1, w+1] <- max(m[i, w+1], m[i, w+1-x$w[i]]+x$v[i])
-      }
-      #cat("Calculated m[i:", i, ", w:", current_w_limit, "] = ", m[[c(i, current_w_limit)]], "\n")
-      w <- w + 1
-    }
-    i <- i + 1
-    w <- 0
-    }
-
-  #cat("Matrix from the dynamic programming:\n")
-  #print.default(m)
+  # Construct a value hashmap where value_hashmap[[c(i,j)]] is
+  # the optimal value that can be achieved when using up to the i:th object and the max weight is j.
+  value_hashmap <- m(nrow(x), W, hashmap(default=-1), x)
 
   # Format and return output
-  output <- list("value" = m[nrow(x)+1, W+1],
-                 "elements" = c(1,2,3),
-                 "time" = Sys.time() - start_time)
+  output <- list("value" = value_hashmap[[c(nrow(x), W)]],
+                 "elements" = find_elements(nrow(x), W, value_hashmap, x))
+
+  # Verify that these elements indeed achieve the optimal value
+  #if(x$v[output$elements] %>% sum() != output$value){cat("ERROR")}
+  #else{cat("Elements verified.\n")}
+
   return(output)
+}
+
+
+# Recursive function for calculating the optimal value
+# value must be an empty hashmap with default value -1.
+# -1 indicates that a position has not been visited before.
+m <- function(i, j, value, x){
+  # Check if the edges have been reached
+  if(i == 0 | j <= 0){return(0)} # value[i,j] = 0
+
+  # Check if a previously unknown position is encountered
+  if(value[[c(i-1, j)]] == -1){
+    value[[c(i-1, j)]] <- m(i-1, j, value, x)
+  }
+
+  # Check if object i is too big for the knapsack
+  if(x$w[i] > j){
+    value[[c(i,j)]] <- value[[c(i-1,j)]]
+  }
+  else{
+    # Check if a previously unknown position is encountered
+    if(value[[c(i-1, j-x$w[i])]] == -1){
+      #cat("Call m again", "\n")
+      value[[c(i-1, j-x$w[i])]] <- m(i-1, j-x$w[i], value, x)
+    }
+    # Store a new value at this position (i)
+    value[[c(i,j)]] <- max(value[[c(i-1,j)]], value[[c(i-1, j-x$w[i])]]+x$v[i])
+  }
+  # Return final hashmap (if finished, otherwise keep going)
+  if(i==nrow(x)){return(value)}
+  else{return(value[[c(i,j)]])}
+}
+
+# Function that finds the elements for a given optimal value.
+find_elements <- function(i,j, value, x){
+  if(i == 0){
+    return(c())
+  }
+  if(value[[c(i,j)]] > value[[c(i-1, j)]]){
+    return(c(i, find_elements(i-1, j-x$w[i], value, x)))
+  }
+  else{return(find_elements(i-1, j, value, x))}
 }
 

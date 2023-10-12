@@ -18,4 +18,5 @@ VignetteBuilder: knitr
 Imports: 
     dplyr,
     magrittr,
+    r2r,
     rlang
