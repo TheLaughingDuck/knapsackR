@@ -33,8 +33,8 @@ benchmark_knapsack <- function(x_list, W_list, name_list=NULL){
   output_df <- data.frame(dataset=c("A"), brute=c(0), dynamic=c(0), greedy=c(0))
   for(i in 1:length(W_list)){
     # Run the algorithms on dataset i
-    brute <- knapsack_brute_force(x_list[[i]], W_list[[i]])
-    dynamic <- knapsack_dynamic(x_list[[i]], W_list[[i]])
+    brute <- brute_force_knapsack(x_list[[i]], W_list[[i]])
+    dynamic <- dynamic_knapsack(x_list[[i]], W_list[[i]])
     greedy <- greedy_knapsack(x_list[[i]], W_list[[i]])
 
     # Store the optimal knapsack solutions for dataset i in the output dataframe
