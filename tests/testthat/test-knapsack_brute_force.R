@@ -11,7 +11,7 @@ expect_silent(bfk <- knapsack_brute_force(x = knapsack_objects[1:8,], W = 3500))
 expect_named(bfk, c("value", "elements"))
 })
 
-#
+
 #test_that("functions rejects errounous input.", {
 #expect_error(knapsack_brute_force("hej", 3500))
 #expect_error(knapsack_brute_force(x = knapsack_objects[1:8,], W = 3500))
