@@ -1,4 +1,4 @@
-#' The `dynamic_knapsack` function
+#' The `knapsack_dynamic` function
 #'
 #' @description This function solves the knapsack problem using a method of dynamic programming.
 #'
@@ -13,10 +13,10 @@
 #'
 #' @importFrom r2r hashmap
 #'
-#' @export dynamic_knapsack
+#' @export knapsack_dynamic
 
 
-dynamic_knapsack <- function(x, W){
+knapsack_dynamic <- function(x, W){
 
   # ---V--- CHECK INPUT ---V---
   # Check x argument
