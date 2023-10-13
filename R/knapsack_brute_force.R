@@ -16,7 +16,7 @@
 
 knapsack_brute_force <- function(x, W) {
   # Check if x is a data.frame with the required structure
-  if (!is.data.frame(x) || !all(c("v", "w") %in% names(x)) && any(x$v <= 0) && any(x$w <= 0)) {
+  if (!is.data.frame(x) || !all(c("v", "w") %in% names(x)) || any(x$v <= 0) || any(x$w <= 0)) {
     stop("Input 'x' must be a data.frame with 'v' and 'w' variables containing positive values.")
   }
   
@@ -36,7 +36,16 @@ knapsack_brute_force <- function(x, W) {
     }
   }
   
-  result <- list(value = round(max_value), elements = round(selected_items))
+  result <- list(value = max_value, elements = selected_items)
   return(result)
 }
+
+# Example usage
+n <- 2000
+set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")  # For reproducibility
+knapsack_objects <- data.frame(w = sample(1:4000, size = n, replace = TRUE),
+                               v = runif(n, 0, 10000))
+knapsack_brute_force(x = knapsack_objects[1:8,], W = 3500)
+knapsack_brute_force(x = knapsack_objects[1:12,], W = 3500)
+knapsack_brute_force(x = knapsack_objects[1:8,], W = 2000)
 
