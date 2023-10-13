@@ -41,6 +41,8 @@ benchmark_knapsack <- function(x_list, W_list, name_list=NULL){
     output_df[nrow(output_df)+1,] <- c(name_list[[i]], brute$value, dynamic$value, greedy$value)
   }
 
+  # Remove default row in output_df
+  output_df <- output_df[c(-1),]
   return(output_df)
 }
 
