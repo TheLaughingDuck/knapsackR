@@ -6,33 +6,17 @@
 #' It has two variables `v` indicating the value of the object, and `w` indicating the weight of the object.
 #'
 #' @param W A numeric indicating the size of the knapsack. In other words: the maximum weight that the knapsack can support.
+#' 
+#' @param parallel FALSE or TRUE is Argument in this parameter
 #'
 #' @return A list of $value: the maximum knapsack value (numeric), and $elements: The rows in `x` that achieve this value, in the form of a vector.
 #'
 #' @source [The wikipedia article on the Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem)
 #'
-#' @export brute_force_knapsack
 #' @import parallel
-
-
-
-# Define the compute_knapsack function
-compute_knapsack <- function(i, x, W) {
-  n <- nrow(x)
-  max_value <- 0
-  selected_items <- numeric(0)
-  
-  combination <- as.integer(intToBits(i))[1:n]
-  total_value <- sum(x$v * combination)
-  total_weight <- sum(x$w * combination)
-  
-  if (total_weight <= W && total_value > max_value) {
-    max_value <- total_value
-    selected_items <- which(combination == 1)
-  }
-  
-  return(list(value = max_value, elements = selected_items))
-}
+#' @export brute_force_knapsack
+#' 
+#' 
 
 brute_force_knapsack <- function(x, W, parallel = FALSE) {
   # Check if x is a data.frame with the required structure
@@ -88,6 +72,23 @@ brute_force_knapsack <- function(x, W, parallel = FALSE) {
   
   result <- list(value = max_value, elements = selected_items)
   return(result)
+}
+
+compute_knapsack <- function(i, x, W) {
+  n <- nrow(x)
+  max_value <- 0
+  selected_items <- numeric(0)
+  
+  combination <- as.integer(intToBits(i))[1:n]
+  total_value <- sum(x$v * combination)
+  total_weight <- sum(x$w * combination)
+  
+  if (total_weight <= W && total_value > max_value) {
+    max_value <- total_value
+    selected_items <- which(combination == 1)
+  }
+  
+  return(list(value = round(max_value), elements = selected_items))
 }
 
 

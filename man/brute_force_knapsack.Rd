@@ -7,13 +7,15 @@
 \href{https://en.wikipedia.org/wiki/Knapsack_problem}{The wikipedia article on the Knapsack problem}
 }
 \usage{
-brute_force_knapsack(x, W)
+brute_force_knapsack(x, W, parallel = FALSE)
 }
 \arguments{
 \item{x}{A dataframe containing the objects that can go in the knapsack.
 It has two variables \code{v} indicating the value of the object, and \code{w} indicating the weight of the object.}
 
 \item{W}{A numeric indicating the size of the knapsack. In other words: the maximum weight that the knapsack can support.}
+
+\item{parallel}{FALSE or TRUE is Argument in this parameter}
 }
 \value{
 A list of $value: the maximum knapsack value (numeric), and $elements: The rows in \code{x} that achieve this value, in the form of a vector.
