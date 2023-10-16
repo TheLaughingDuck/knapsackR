@@ -37,8 +37,7 @@ dynamic_knapsack <- function(x, W){
                  "elements" = find_elements(nrow(x), W, value_hashmap, x))
 
   # Verify that these elements indeed achieve the optimal value
-  #if(x$v[output$elements] %>% sum() != output$value){cat("ERROR")}
-  #else{cat("Elements verified.\n")}
+  if(x$v[output$elements] %>% sum() != output$value){cat("Warning: The combined value of the elements does not match the optimal value.")}
 
   return(output)
 }
