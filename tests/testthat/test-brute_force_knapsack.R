@@ -16,10 +16,10 @@ test_that("Correct object is returned", {
   expect_named(bfk, c("value", "elements"))
 })
 
-#test_that("functions rejects errounous input.", {
-  #expect_error(brute_force_knapsack("hej", 3500))
-  #expect_error(brute_force_knapsack(x = knapsack_objects[1:8,], W = -3500))
-#})
+test_that("functions rejects errounous input.", {
+expect_error(brute_force_knapsack("hej", 3500))
+expect_error(brute_force_knapsack(x = knapsack_objects[1:8,], W = -3500))
+})
 
 test_that("Function return correct results.", {
   bfk <- brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
