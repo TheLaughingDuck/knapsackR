@@ -13,7 +13,7 @@
 #'
 #' @source [The wikipedia article on the Knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem)
 #'
-#' @import parallel
+#' @importFrom parallel detectCores makeCluster clusterExport parLapply stopCluster
 #'
 #' @export brute_force_knapsack
 #'
