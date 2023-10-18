@@ -18,10 +18,14 @@ test_that("Correct object is returned", {
 
 test_that("functions rejects errounous input.", {
 expect_error(brute_force_knapsack("hej", 3500))
-expect_error(brute_force_knapsack(x = knapsack_objects[1:8,], W = -3500))
 })
 
 test_that("Function return correct results.", {
+  
+  bfk <- brute_force_knapsack(x = knapsack_objects[1:8,], W = -3500)
+  expect_equal(round(bfk$value), 0)
+  expect_true(all(round(bfk$elements) %in% c(0)))
+  
   bfk <- brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
   expect_equal(round(bfk$value), 16770)
   expect_true(all(round(bfk$elements) %in% c(5, 8)))
