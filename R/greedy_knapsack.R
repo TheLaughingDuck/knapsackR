@@ -21,10 +21,10 @@
 greedy_knapsack <- function(x, W){
 
   # ---V--- CHECK INPUT ---V---
-  # Check arg1 argument
+  # Check x argument
   stopifnot("argument \"x\" is not data.frame" = is.data.frame(x))
 
-  # Check arg2 argument
+  # Check W argument
   stopifnot("argument \"W\" is not numeric" = is.numeric(W))
   stopifnot("argument \"W\" is not positive" = W > 0)
   # ---^--- CHECK INPUT ---^---
