@@ -21,6 +21,7 @@ dynamic_knapsack <- function(x, W){
   # ---V--- CHECK INPUT ---V---
   # Check x argument
   stopifnot("argument \"x\" is not data.frame" = is.data.frame(x))
+  stopifnot("Incorrect columns in argument \"x\": should contain columns \"v\" and \"w\"" = all(colnames(x) %in% c("v", "w")))
   stopifnot("not all object weights are positive integers (as required)" = all(x$w %% 1 == 0 & x$w > 0))
 
   # Check W argument
