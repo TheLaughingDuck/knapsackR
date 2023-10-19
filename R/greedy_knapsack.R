@@ -24,6 +24,8 @@ greedy_knapsack <- function(x, W){
   # Check x argument
   stopifnot("argument \"x\" is not data.frame" = is.data.frame(x))
   stopifnot("Incorrect columns in argument \"x\": should contain columns \"v\" and \"w\"" = all(colnames(x) %in% c("v", "w")))
+  stopifnot("Negative values in argument \"x\", column \"v\"" = all(x$v > 0))
+  stopifnot("Negative values in argument \"x\", column \"w\"" = all(x$w > 0))
 
   # Check W argument
   stopifnot("argument \"W\" is not numeric" = is.numeric(W))
