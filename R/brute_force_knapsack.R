@@ -26,6 +26,7 @@ brute_force_knapsack <- function(x, W, parallel=FALSE) {
   # ---V--- CHECK INPUT ---V---
   # Check x argument
   stopifnot("argument \"x\" is not data.frame" = is.data.frame(x))
+  stopifnot("Incorrect columns in argument \"x\": should contain columns \"v\" and \"w\"" = all(colnames(x) %in% c("v", "w")))
 
   # Check W argument
   stopifnot("argument \"W\" is not numeric" = is.numeric(W))
