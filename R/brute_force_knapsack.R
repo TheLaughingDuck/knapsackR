@@ -85,6 +85,7 @@ brute_force_knapsack <- function(x, W, parallel=FALSE) {
       }
     }
   }
-  return(list(value = round(max_value), elements = selected_items))
+
+  return(list(value = max_value, elements = selected_items))
 }
 

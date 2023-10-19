@@ -52,9 +52,15 @@ test_that("Function return correct results.", {
 # ------------------------------------
 # Unit tests made up by the developers
 
-test_that("dynamic_knapsack returns correct output",{
-  output <- expect_error(dynamic_knapsack(iris, 2))
-  #expect_true(is.null(output$value) == FALSE & is.null(output$elements) == FALSE)
+test_that("the achieved value matches the combined value of elements",{
+  output <- dynamic_knapsack(knapsack_objects[1:16,], 1002)
+  expect_equal(knapsack_objects[1:16,]$v[output$elements] %>% sum(),
+               output$value)
+})
+
+test_that("the achieved solution does not exceed the weight limit",{
+  output <- dynamic_knapsack(knapsack_objects[1:16,], 1002)
+  expect_true(knapsack_objects[1:16,]$w[output$elements] %>% sum() <= 1002)
 })
 
 test_that("dynamic_knapsack wikipedia example works",{
