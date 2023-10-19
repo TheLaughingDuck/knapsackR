@@ -1,5 +1,5 @@
 ---
-title: "knapsackR"
+title: "Knapsack lab report"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{knapsackR}
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# The knapsack problem
+## The knapsack problem
 The knapsack problem is a combinatorial problem that involves creating a selection of some given objects with associated weight and value in such a way that their combined weigtht does not exceed a given limit, and their combined value is maximised. In this package we will only consider the 0-1 knapsack problem variation, where each object can either be selected *once* or *not at all*.
 
 To get started, we will load the package in the chunk below.
@@ -44,23 +44,25 @@ The first method we will discuss is the **Brute force method**, which calculates
 
 ```{r}
 # Example
-#x <- data.frame(v=c(1,1,2,3), w=c(0.3, 0.2, 0.5, 0.6))
-#W <- 1.5
-#knapsack_brute_force(x, W)
+#brute_force_knapsack(knapsack_objects[1:10,], 3500)
+
+system.time(results <- brute_force_knapsack(knapsack_objects[1:10,], 3500))
+
+results
 ```
 
 
 ## Dynamic programming
 
-
 ```{r}
 # Example
-#x <- data.frame(v=c(1,1,2,3), w=c(0.3, 0.2, 0.5, 0.6))
-#W <- 1.5
-#knapsack_dynamic(x, W)
+dynamic_knapsack(knapsack_objects[1:10,], 3500)
 ```
 
 
 ## Greedy heuristic
 
-
+```{r}
+# Example
+greedy_knapsack(knapsack_objects[1:10,], 3500)
+```
