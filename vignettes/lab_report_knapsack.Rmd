@@ -42,7 +42,7 @@ v=runif(n = n, 0, 10000)
 ## The `knapsack_brute_force` function
 The first method we will discuss is the **Brute force method**, which calculates the combined weights and values of all possible combinations. The combination of objects with the highest value that still respects the weight limit is guaranteed to be the optimal solution. Below, we run an implementation of the brute force algorithm on a dataframe with 16 objects. The computation time and result of the algorithm is returned.
 
-```{r}
+```{r eval=F}
 # Example
 
 system.time(results <- brute_force_knapsack(knapsack_objects[1:16,], 1000))
@@ -53,7 +53,7 @@ results
 ## Dynamic programming
 Another approach to solving the knapsack problem is through **dynamic programming** (see pseudocode on the [knapsack wikipedia page](https://en.wikipedia.org/wiki/Knapsack_problem#0-1_knapsack_problem)). Below, we run an implementation of the dynamic approach described above on a dataframe with 500 objects. The computation time and result of the algorithm is returned.
 
-```{r}
+```{r eval=F}
 # Example
 
 system.time(results <- dynamic_knapsack(knapsack_objects[1:500,], 1000))
@@ -65,7 +65,7 @@ results
 ## Greedy heuristic
 Another method for solving the knapsack problem is a (heuristic) **greedy** approach (see pseudocode on the [knapsack wikipedia page](https://en.wikipedia.org/wiki/Knapsack_problem#Greedy_approximation_algorithm)). Below, we run an implementation of the dynamic approach described above on a dataframe with `10^6` objects. The computation time and result of the algorithm is returned.
 
-```{r}
+```{r eval=F}
 # Example
 
 system.time(results <- greedy_knapsack(knapsack_objects[1:10**6,], 1000))

@@ -31,56 +31,42 @@ dynamic_knapsack <- function(x, W){
   stopifnot("maximum weight is not a positive integer (as required)" = all(W %% 1 == 0 & W > 0))
   # ---^--- CHECK INPUT ---^---
 
-  # Construct a value hashmap where value_hashmap[[c(i,j)]] is
-  # the optimal value that can be achieved when using up to the i:th object and the max weight is j.
-  value_hashmap <- m(nrow(x), W, hashmap(default=-1), x)
+  # Construct a matrix with default zeroes, intended to hold the optimal value
+  # that can be achieved when using up to the i:th object and the max weight is j.
+  h_matrix <- matrix(0, nrow=nrow(x)+1, ncol=W+1, dimnames = list(c(0:nrow(x)), c(0:W)))
+
+  # Fill in the matrix
+  for (i in 1:nrow(x)){
+    for (j in 1:W){
+      if (x$w[i] > j){
+        # Calc ...
+        h_matrix[1+i, 1+j] <- h_matrix[1+i-1, 1+j]
+      }
+      else {
+        # Calc ...
+        a <- h_matrix[1+i-1, 1+j]
+        b <- h_matrix[1+i-1, 1+j-x$w[i]]+x$v[i]
+
+        h_matrix[1+i, 1+j] <- max(a, b)
+      }
+    }
+  }
 
   # Format and return output
-  output <- list("value" = value_hashmap[[c(nrow(x), W)]],
-                 "elements" = find_elements(nrow(x), W, value_hashmap, x))
+  output <- list("value" = h_matrix[1+nrow(x), 1+W],
+                 "elements" = find_elements(nrow(x), W, h_matrix, x))
 
   return(output)
 }
 
-
-# Recursive function for calculating the optimal value
-# value must be an empty hashmap with default value -1.
-# -1 indicates that a position has not been visited before.
-m <- function(i, j, value, x){
-  # Check if the edges have been reached
-  if(i == 0 | j <= 0){return(0)} # value[i,j] = 0
-
-  # Check if a previously unknown position is encountered
-  if(value[[c(i-1, j)]] == -1){
-    value[[c(i-1, j)]] <- m(i-1, j, value, x)
-  }
-
-  # Check if object i is too big for the knapsack
-  if(x$w[i] > j){
-    value[[c(i,j)]] <- value[[c(i-1,j)]]
-  }
-  else{
-    # Check if a previously unknown position is encountered
-    if(value[[c(i-1, j-x$w[i])]] == -1){
-      #cat("Call m again", "\n")
-      value[[c(i-1, j-x$w[i])]] <- m(i-1, j-x$w[i], value, x)
-    }
-    # Store a new value at this position (i)
-    value[[c(i,j)]] <- max(value[[c(i-1,j)]], value[[c(i-1, j-x$w[i])]]+x$v[i])
-  }
-  # Return final hashmap (if finished, otherwise keep going)
-  if(i==nrow(x)){return(value)}
-  else{return(value[[c(i,j)]])}
-}
-
 # Function that finds the elements for a given optimal value.
-find_elements <- function(i,j, value, x){
+find_elements <- function(i,j, matrix, x){
   if(i == 0){
     return(c())
   }
-  if(value[[c(i,j)]] > value[[c(i-1, j)]]){
-    return(c(i, find_elements(i-1, j-x$w[i], value, x)))
+  if(matrix[1+i, 1+j] > matrix[1+i-1, 1+j]){
+    return(c(i, find_elements(i-1, j-x$w[i], matrix, x)))
   }
-  else{return(find_elements(i-1, j, value, x))}
+  else{return(find_elements(i-1, j, matrix, x))}
 }
 
