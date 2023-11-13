@@ -1,5 +1,6 @@
 ---
 title: "Knapsack lab report"
+author: "Simon Jorstedt & Muditha Cherangani"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{knapsackR}
@@ -25,7 +26,7 @@ library(knapsackR)
 
 For our examples below we will be using the following simulated objects.
 
-```{r}
+```{r RandomdataChunk}
 RNGversion(min(as.character(getRversion()),"3.5.3"))
 
 ##old sampler used for backward compatibility
@@ -45,12 +46,17 @@ The first method we will discuss is the **Brute force method**, which calculates
 
 ## Question-1
 
-How much time does it takes to run the algorithm for n = 16 objects?
-```{r eval=F}
-# Example
+> How much time does it takes to run the brute force algorithm for n = 16 objects?
 
+In the chunk below, we see that it takes the algorithm less than 1 second to solve the knapsack problem with $n=16$ objects. Additionaly, we see that there is an time improvement when the parallelized algorithm is used. This improvement would likely be more evident when the algorithm is run on a larger selection of objects.
+
+```{r BruteForceChunk}
+# Regular brute force implementation
 system.time(results <- brute_force_knapsack(knapsack_objects[1:16,], 3500))
+results
 
+# Parallelized brute force implementation
+system.time(results <- brute_force_knapsack(knapsack_objects[1:16,], 3500, parallel = TRUE))
 results
 ```
 
@@ -59,9 +65,10 @@ Another approach to solving the knapsack problem is through **dynamic programmin
 
 ## Question-2
 
-How much time does it takes to run the algorithm for n = 500 objects?
-```{r eval=F}
-# Example
+> How much time does it takes to run the dynamic algorithm for n = 500 objects?
+
+```{r DynamicChunk}
+# Dynamic implementation
 
 system.time(results <- dynamic_knapsack(knapsack_objects[1:500,], 3500))
 
@@ -74,35 +81,26 @@ Another method for solving the knapsack problem is a (heuristic) **greedy** appr
 
 ## Question-3
 
-How much time does it takes to run the algorithm for n = 1000000 objects?
-```{r eval=F}
-# Example
+> How much time does it takes to run the greedy heuristic algorithm for n = 1000000 objects?
 
-system.time(results <- greedy_knapsack(knapsack_objects[1:10**6,], 1000))
+```{r Greedychunk}
+# Greedy Heuristic implementation
+
+system.time(results <- greedy_knapsack(knapsack_objects[1:10**6,], 100))
 
 results
 ```
 
 
-
 ## Question-4
 
-What performance gain could you get by trying to improving your code?
+> What performance gain could you get by trying to improving your code?
 
-## Answer
-
-Implentation to speedup algorithm
+The overall time taken to run an algorithm could be lowered. In some cases, a better solution could be achieved.
 
 ## Question-5
 
-What performance gain could you get by parallelizing brute force search?
+> What performance gain could you get by parallelizing brute force search?
 
-## Answer
+By parallelizing the brute force implementation across multiple cores, we could achieve a speedup roughly proportional to the number of cores used. In other words, a reduced execution time.
 
-1.Speedup Proportional to the Number of Cores:
-
-Parallelizing a brute force search across multiple cores could result in a speedup roughly proportional to the number of cores used.
-
-2.Reduced Execution Time:
-
-Parallelization can lead to a significant reduction in the overall execution time, especially when the search space is vast and the problem is parallelizable.
