@@ -8,4 +8,4 @@ An R package for studying the knapsack problem.
 ## Downloading and running this package
 * Open either RStudio or RGui. In the console, load the `devtools` package.
 
-* Run `devtools::install_github("TheLaughingDuck/knapsackR")`.
+* Run `devtools::install_github("TheLaughingDuck/knapsackR", build_vignettes = TRUE)`.
