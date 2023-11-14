@@ -3,7 +3,7 @@
 <!-- badges: end -->
 
 # knapsack_R
-An R package for studying the knapsack problem.
+An R package for studying the knapsack problem
 
 ## Downloading and running this package
 * Open either RStudio or RGui. In the console, load the `devtools` package.
