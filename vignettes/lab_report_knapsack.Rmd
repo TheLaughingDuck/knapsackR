@@ -22,6 +22,7 @@ To get started, we will load the package in the chunk below.
 
 ```{r setup}
 library(knapsackR)
+library(parallel)
 ```
 
 For our examples below we will be using the following simulated objects.
@@ -50,7 +51,7 @@ The first method we will discuss is the **Brute force method**, which calculates
 
 In the chunk below, we see that it takes the algorithm less than 1 second to solve the knapsack problem with $n=16$ objects. Additionaly, we see that there is an time improvement when the parallelized algorithm is used. This improvement would likely be more evident when the algorithm is run on a larger selection of objects.
 
-```{r BruteForceChunk, eval=F}
+```{r BruteForceChunk}
 # Regular brute force implementation
 system.time(results <- brute_force_knapsack(knapsack_objects[1:16,], 3500))
 results

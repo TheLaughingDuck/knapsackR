@@ -62,7 +62,19 @@ brute_force_knapsack <- function(x, W, parallel=FALSE) {
 
   if (parallel) {
     # Parallelize using multiple cores
-    num_cores <- detectCores()
+
+    # Deal with the CRAN 2 core limit. See
+    # https://stackoverflow.com/questions/50571325/r-cran-check-fail-when-using-parallel-functions
+    chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
+    if (nzchar(chk) && chk == "TRUE") {
+      # use 2 cores in CRAN/Travis/AppVeyor
+      num_cores <- 2L
+    } else {
+      # use all cores in devtools::test()
+      num_cores <- detectCores()
+    }
+
+    #num_cores <- detectCores()
     clusters <- makeCluster(num_cores)
     clusterExport(clusters, "intToBits")
     result <- parLapply(clusters, combinations, compute_knapsack)
